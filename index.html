@@ -15,19 +15,21 @@
 <link rel="mask-icon" type="" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111" />
 
 
-  <title>CodePen - 2101-5 sd w4 d1</title>
+  <title>CodePen - 2101-5 sd w4 d2</title>
   
   
   
   
 <style>
 .student{
-  background:lightblue;
-  border-style:ridge;
+  background:teal;
+  border-style:dashed;
   text-align:center;
   width:50%
   margin.auto
 }
+
+.studentSelected
 </style>
 
   
@@ -39,38 +41,7 @@
 
 <body translate="no" >
   <div id="container">
-  <div class="student" id="isaacallnutt">
-    Isaac Allnutt
-  </div>
-    <div class="student" id="giangaspar">
-    Gian Gasper
-    <div class="student" id="itaimalakoff">
-    Itai Malakoff
-    <div class="student"
-id="fionaalhadeff" >
-    Fiona Alhadeff
-    <div class="student"
-id="aldencuter" >
-    Alden Cutler
-    <div class="student"
-id="edencampbell" >
-    Eden Campbell
-     <div class="student"
-id="johnsawyer" >
-    John Sawyer
-     <div class="student"
-id="lucasandoval" >
-    Luca Sandoval
-      <div class="student"
-id="mckenzieroberts" >
-    McKenzie Roberts
-      <div class="student"
-id="samsakaguchi" >
-    Sam Sakaguchi
-      <div class="student"
-id="emmasindeldempcy" >
-    Emma Sindel-Dempcy
-  </div>
+  
 </div>
 
 <button         
@@ -84,7 +55,6 @@ id="pickStudent">
   
       <script id="rendered-js" >
 console.clear();
-console.log("hello world");
 
 const students = [];
 
@@ -94,8 +64,7 @@ function makeStudent(username,first,last,gradeLevel){
   student.first = first;
   student.last = last;
   student.gradeLevel = gradeLevel;
-  
-  console.log(student);
+  student.clickcount = 0;
   return student;
 }
 
@@ -110,7 +79,6 @@ students.push(makeStudent("lucasandoval","Luca","Sandoval",12));
 students.push(makeStudent("mckenzieroberts","McKenzie","Roberts",12));
 students.push(makeStudent("samsakaguchi","Sam","Sakaguchi",12))
 students.push(makeStudent("emmasindeldempcy","Emma","Sindel-Dempcy",12));;
-console.log(students);
 
 function pickStudent(){
   let randomStudentNum = Math.floor(Math.random()*students.length);
@@ -122,6 +90,35 @@ function pickStudent(){
 pickStudent();
 let pickButton = document.getElementById("pickStudent");
 pickButton.addEventListener("click",pickStudent);
+
+
+function renderList() {
+  console.log("renderList", students);
+  students.sort(function(a,b){return a.clickcount-b.clickcount})
+  content = "";
+  for (let i = 0; i < students.length; i++) {
+    content += `<div class="student" id="${students[i].username}">
+    ${students[i].first} ${students[i].last} ${students[i].clickcount}
+  </div>`;
+  }
+  let element = document.getElementById("container");
+  element.innerHTML = content;
+}
+
+renderList();
+
+function listclick(e){
+  console.log("listclick",e.target.id)
+  for(let i = 0; i < students.length; i++){
+    if(students[i].username == e.target.id){
+      students[i].clickcount++;
+    }
+  }
+  renderList();
+}
+
+let renderclick = document.getElementById("container");
+renderclick.addEventListener("click",listclick);
     </script>
 
   
